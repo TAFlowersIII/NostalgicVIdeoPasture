@@ -2,6 +2,8 @@ import express from 'express';
 
 import { getPosts, createPost, updatePost, deletePost } from '../controllers/posts.js'
 
+//test 
+
 const router = express.Router();
 
 router.get('/', getPosts);
