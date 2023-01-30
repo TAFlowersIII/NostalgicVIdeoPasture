@@ -13,12 +13,12 @@ app.use(cors());
 
 app.use('/posts', postRoutes);
 
-const CONNECTION_URL = 'mongodb+srv://TAFlowers:TAFlowers777@cluster1.epyhitf.mongodb.net/?retryWrites=true&w=majority';
+// const CONNECTION_URL = 'mongodb+srv://TAFlowers:TAFlowers777@cluster1.epyhitf.mongodb.net/?retryWrites=true&w=majority';
 
 const PORT = process.env.PORT || 5001;
 
 mongoose.set(`strictQuery`, false);
 
-mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
      .then(() => app.listen(PORT, () => console.log(`**********Server online: port ${PORT}**********`)))
      .catch((error) => console.log(error.message));
