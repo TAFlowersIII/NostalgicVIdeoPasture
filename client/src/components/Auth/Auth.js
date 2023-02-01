@@ -70,19 +70,13 @@ const Auth = () => {
                     <Typography variant="h5">{isSignUp ? 'Sign Up' : 'Sign In'}</Typography>
                     <form className={classes.form} onSubmit={handleSubmit}>
                          <Grid container spacing={2}>
-                              {
-                                   isSignUp && (
-                                        <>
-                                                  <Input name="username" label="Username" handleChange={handleChange} type="username"/>
-                                        </>
+                              { isSignUp && (
+                                         <Input name="username" label="Username" handleChange={handleChange} type="username"/>
                                    )}
-                                   <Input name="email" label="Email Address" handleChange={handleChange}  type="email"/>
-                                   <Input name="password" label='password' handleChange={handleChange} type='password' handleShowPassword={handleShowPassword} /> 
-                                   { 
-                                        isSignUp &&  (
-                                             <>
-                                             <Input name='confirmPassword' label='Repeat Password' handleChange={handleChange} type='confirmPassword' />
-                                             </>
+                                   <Input name='email' label='Email Address' handleChange={handleChange}  type="email"/>
+                                   <Input name='password' label='Password' handleChange={handleChange} type={ showPassword ? 'text' : 'password' } handleShowPassword={handleShowPassword} /> 
+                                   { isSignUp &&  (
+                                        <Input name='confirmPassword' label='Repeat Password' handleChange={handleChange} type='confirmPassword' />
                                    )}
                          </Grid>
                          <Button type='submit' fullWidth variant='contained' color='primary' className={ classes.submit }>
