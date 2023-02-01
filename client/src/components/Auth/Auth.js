@@ -1,32 +1,46 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import jwt_decode from 'jwt-decode';
 import { GoogleLogin } from '@react-oauth/google';
+import jwt_decode from 'jwt-decode';
 
 import Icon from './icon.js';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 import useStyles from './styles.js';
 import Input from './Input.js';
+import { signin, signup } from '../../actions/auth';
+
+const initialState = { username: '', email: '', password: '', confirmPassword: ''};
 
 const Auth = () => {
+
      const classes = useStyles();
      const [showPassword, setShowPassword] = useState(false);
      const [isSignUp, setIsSignUp] = useState(false);
+     const [formData, setFormData] = useState(initialState);
      const dispatch = useDispatch();
      const history = useHistory();
+
      const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
-     const handleSubmit = () => {
 
-     }
-     const handleChange = () => {
+     const handleSubmit = (e) => {
+          e.preventDefault();
+          if(isSignUp) {
+               dispatch(signup(formData, history));
+          } else {
+               dispatch(signin(formData, history));
+          }
+     };
 
-     }
+     const handleChange = (e) => {
+          setFormData({ ...formData, [e.target.name]: e.target.value });
+     };
+
      const switchMode = () => {
           setIsSignUp((prevIsSignUp) => !prevIsSignUp);
-          handleShowPassword(false);
+          setShowPassword(false);
      };
 
      const googleSuccess = async (res) => {
@@ -59,19 +73,22 @@ const Auth = () => {
                               {
                                    isSignUp && (
                                         <>
-                                                  <Input name="firstName" label="firstName" handleChange={handleChange} autoFocus half />
-                                                  <Input name="firstName" label="firstName" handleChange={handleChange} half />
+                                                  <Input name="username" label="Username" handleChange={handleChange} type="username"/>
                                         </>
                                    )}
                                    <Input name="email" label="Email Address" handleChange={handleChange}  type="email"/>
-                                   <Input name="password" label='password' handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} /> 
-                                   { isSignUp && <Input name='confirmPassword' label='Repeat Password' handleChange={handleChange} type='password' />}
+                                   <Input name="password" label='password' handleChange={handleChange} type='password' handleShowPassword={handleShowPassword} /> 
+                                   { 
+                                        isSignUp &&  (
+                                             <>
+                                             <Input name='confirmPassword' label='Repeat Password' handleChange={handleChange} type='confirmPassword' />
+                                             </>
+                                   )}
                          </Grid>
                          <Button type='submit' fullWidth variant='contained' color='primary' className={ classes.submit }>
                               { isSignUp ? 'Sign Up' : 'Sign In' }
                          </Button>
                          <GoogleLogin 
-                              // clientId="118715344793-lnu3ejuokk1cuclmmckacifng783c2q6.apps.googleusercontent.com"
                               render={(renderProps) => (
                                    <Button 
                                         className={classes.googleButton}   

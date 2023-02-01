@@ -13,11 +13,13 @@ import useStyles from './styles.js'
 const Post = ({ post, setCurrentId }) => {
      const classes = useStyles();
      const dispatch = useDispatch();
+     
+
      return (
           <Card className={classes.card}>
                <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
                <div className={classes.overlay}>
-                    <Typography variant="h6">{post.creator}</Typography>
+                    <Typography variant="h6">{post.username}</Typography>
                     <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
                </div>
                <div className={classes.overlay2}>
