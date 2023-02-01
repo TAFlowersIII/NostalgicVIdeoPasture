@@ -23,7 +23,7 @@ export const signin = async (req, res) => {
 
 
 export const signup = async (req, res) => {
-     const { username, email, password, confirmPassword } = req.body
+     const { name, email, password, confirmPassword } = req.body
 
      try {
           const existingUser = await User.findOne({ email });
@@ -34,7 +34,7 @@ export const signup = async (req, res) => {
 
           const hashedPassword = await bcrypt.hash(password, 12);
 
-          const result = await User.create({ email, password: hashedPassword, username});
+          const result = await User.create({ email, password: hashedPassword, name});
 
           const token = jwt.sign({ email: result.email, id: result._id},  'test', { expiresIn: "8h" });
 

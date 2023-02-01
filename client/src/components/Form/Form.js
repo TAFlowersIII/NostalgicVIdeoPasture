@@ -7,8 +7,8 @@ import useStyles from './styles.js'
 import { createPost, updatePost } from '../../actions/posts.js';
 
 const Form = ({ currentId, setCurrentId }) => {
-     const [postData, setPostData] = useState ({ title: '', message: '', tags: '', selectedFile: '' });
-     const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null );
+     const [postData, setPostData] = useState ({ title: '', message: '', tags: [], selectedFile: '' });
+     const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null ));
      const classes = useStyles();
      const dispatch = useDispatch();
      const user = JSON.parse(localStorage.getItem('profile'));
@@ -24,16 +24,17 @@ const Form = ({ currentId, setCurrentId }) => {
 
      const handleSubmit = (e) => {
           e.preventDefault();
-          if(currentId === 0) {
-               dispatch(createPost({...postData, name: user?.result?.username}));
+          console.log(currentId, postData, user);
+          if(currentId === null) {
+               dispatch(createPost({...postData, name: user?.result?.name}));
                clear();
           } else {
-               dispatch(updatePost(currentId, { ...postData, name: user?.result?.username}));
+               dispatch(updatePost(currentId, { ...postData, name: user?.result?.name}));
                clear();
           }
      };
 
-     if (!user?.result?.username) {
+     if (!user?.result?.name) {
           return (
                <Paper className={classes.paper}>
                     <Typography variant="h6" align="center">

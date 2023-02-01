@@ -11,8 +11,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import useStyles from './styles.js';
 import Input from './Input.js';
 import { signin, signup } from '../../actions/auth';
+import { AUTH } from '../../constants/actiontypes.js';
 
-const initialState = { username: '', email: '', password: '', confirmPassword: ''};
+const initialState = { name: '', email: '', password: '', confirmPassword: ''};
 
 const Auth = () => {
 
@@ -44,17 +45,17 @@ const Auth = () => {
      };
 
      const googleSuccess = async (res) => {
-          console.log(res);
-          const result = jwt_decode(res?.credential);
-          console.log(result);
-
+          const token = res?.credential;
+          const result = jwt_decode(token);
+      
           try {
-               dispatch({ type: 'AUTH', data: {result}});
-               history.push('/');
+            dispatch({ type: AUTH, data: { result, token } });
+            history.push('/');
+
           } catch (error) {
-               console.log(error);
+            console.log(error);
           }
-     }
+        }
 
      const googleFailure = (error) => {
           console.log('Google Sign In request returned an error. Try again');
@@ -71,12 +72,12 @@ const Auth = () => {
                     <form className={classes.form} onSubmit={handleSubmit}>
                          <Grid container spacing={2}>
                               { isSignUp && (
-                                         <Input name="username" label="Username" handleChange={handleChange} type="username"/>
+                                         <Input name="name" label="Username" handleChange={handleChange} type="name"/>
                                    )}
                                    <Input name='email' label='Email Address' handleChange={handleChange}  type="email"/>
                                    <Input name='password' label='Password' handleChange={handleChange} type={ showPassword ? 'text' : 'password' } handleShowPassword={handleShowPassword} /> 
                                    { isSignUp &&  (
-                                        <Input name='confirmPassword' label='Repeat Password' handleChange={handleChange} type='confirmPassword' />
+                                        <Input name='confirmPassword' label='Repeat Password' handleChange={handleChange} type='password' />
                                    )}
                          </Grid>
                          <Button type='submit' fullWidth variant='contained' color='primary' className={ classes.submit }>
@@ -103,7 +104,7 @@ const Auth = () => {
                          <Grid container justifyContent='flex-end'>
                               <Grid item>
                                    <Button onClick={switchMode}>
-                                        { isSignUp ? 'Already have account? Sign in' : 'Dont have an account?' }
+                                        { isSignUp ? 'Already have account? Sign in' : "Dont' have an account?" }
                                    </Button>
                               </Grid>
                          </Grid>
