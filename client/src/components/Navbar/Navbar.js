@@ -34,12 +34,12 @@ const Navbar = () => {
 
      return(
      <AppBar className={classes.appBar} position="static" color="inherit">
-          <div className={classes.brandContainer}>
-               <Typography component={Link} to="/" className ={classes.heading} variant="h2" align="center">Title</Typography>
+          <Link to='/' className={classes.brandContainer}>
+               <Typography className ={classes.heading} variant="h2" align="center">Collective Nostalgia Video Club</Typography>
                <img className = {classes.image} src={NostalgicVideoPasture} alt="Nostalgic Video Pasture" height="60" />
-          </div>
+          </Link>
           <Toolbar className={classes.toolbar}>
-               {user ? (
+               {user?.result ? (
 
                     <div className={classes.profile}>
                          <Avatar className={classes.purple} alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>

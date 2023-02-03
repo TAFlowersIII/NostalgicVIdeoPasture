@@ -57,9 +57,8 @@ const Auth = () => {
           }
         }
 
-     const googleFailure = (error) => {
+     const googleFailure = () => {
           console.log('Google Sign In request returned an error. Try again');
-          console.log(error);
      }
 
      return (
