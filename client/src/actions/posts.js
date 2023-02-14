@@ -38,12 +38,27 @@ export const getPostsByCreator = (name) => async (dispatch) => {
   }
 };
 
+export const doYoutubeSearch = (search) => async (dispatch) => {
+  try {
+    dispatch({ type: START_LOADING });
+    const response = await api.doYoutubeSearch(search);
+    console.log(response);
+
+    dispatch({ type: STOP_LOADING });
+    
+  } catch (error) {
+    console.log(error);
+  };
+};
+
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    const { data: { data } } = await api.fetchPostsBySearch(searchQuery);
+    // const { data: { data } } = await api.fetchPostsBySearch(searchQuery);
+    // console.log(data);
+    console.log("getPostsBySearch: local search function that we aren't using but can't be commented out right now.");
 
-    dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
+    // dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
     dispatch({ type: STOP_LOADING });
   } catch (error) {
     console.log(error);

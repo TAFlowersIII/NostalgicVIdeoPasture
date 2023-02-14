@@ -1,6 +1,7 @@
 import { CREATE, UPDATE, DELETE, LIKE, COMMENT, FETCH_POST, FETCH_ALL, FETCH_BY_SEARCH, START_LOADING, STOP_LOADING }from '../constants/actiontypes.js'
 
 export default (state = { isLoading: true, posts: [] }, action) => {
+     console.log(state);
      switch (action.type) {
 
           case START_LOADING:
